@@ -1,12 +1,10 @@
 const express = require('express');
-const courseRouter = require('./routes/courseRouter');
 const cors = require('cors');
-
+const courseRouter = require('./routes/courseRouter');
+const port = 7000;
 const app = express();
 
 app.use(cors());
-
-const port = 7000;
 
 app.use(express.json());
 

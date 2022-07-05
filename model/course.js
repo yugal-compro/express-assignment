@@ -1,3 +1,4 @@
+const fs = require('fs');
 const courses = require('../data/courses.json');
 let mySet = new Set();
 for(course of courses){
@@ -36,8 +37,10 @@ const addCourse = (data)=>{
     }
     courses.push(newCourse);
     mySet.add(newSubjectId);
-    //console.log(courses);
-    return courses;
+    fs.writeFile(`C:/express-assignment/data/courses.json`,JSON.stringify(courses),(err)=>{
+        if(err) return null;
+    });
+    return newCourse;
 }
 
 const updatedCourses = (id,data)=>{
@@ -62,7 +65,11 @@ const updatedCourses = (id,data)=>{
         dateModified: `${day}/${month}/${year} ${hoursIST}:${minutesIST}`
     }
     courses.splice(index,1,newCourse);
-    return courses;
+    
+    fs.writeFile(`C:/express-assignment/data/courses.json`,JSON.stringify(courses),err=>{
+        if(err) return null;
+    });
+   return newCourse;
 }
 
 const updatedCoursesAfterDeletion = (id)=>{
@@ -73,7 +80,11 @@ const updatedCoursesAfterDeletion = (id)=>{
     mySet.delete(id);
     const index = courses.findIndex(el => el.subjectId === id);
     courses.splice(index,1);
-    return courses;
+    
+        fs.writeFile(`C:/express-assignment/data/courses.json`,JSON.stringify(courses),err=>{
+          if(err) return null;
+        });
+      return courses;
 }
 
 module.exports = {getCourses,getCourse,addCourse,updatedCourses,updatedCoursesAfterDeletion,courses};
