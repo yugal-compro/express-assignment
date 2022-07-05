@@ -1,17 +1,12 @@
 const courses = require('../data/courses.json');
-console.log(courses);
 let mySet = new Set();
 for(course of courses){
     mySet.add(course.subjectId);
 }
-
 const getCourses = ()=>{
-  //  console.log(courses);
     return courses;
 };
-
-const getCourseById = (id)=>{
-    
+const getCourse = (id)=>{
     if(!mySet.has(id)){
        return null;
     }
@@ -19,7 +14,7 @@ const getCourseById = (id)=>{
     return course;
 }
 
-const modifiedCoursesArray = (data)=>{
+const addCourse = (data)=>{
 
     const newSubjectId = (courses.length==0)?1:courses[courses.length-1].subjectId + 1;
     //date and time calculation
@@ -32,8 +27,6 @@ const modifiedCoursesArray = (data)=>{
     let day = currentTime.getUTCDay()+3;
     let month = currentTime.getUTCMonth()+1;
     let year = currentTime.getUTCFullYear();
-
-    // const newCourse = Object.assign({subjectId:newSubjectId},data,{"dateCreated":},{"dateModified":});
     const newCourse = {
         subjectId: newSubjectId,
         subjectName: data.subjectName,
@@ -47,15 +40,11 @@ const modifiedCoursesArray = (data)=>{
     return courses;
 }
 
-const modifiedCoursesArrayAfterUpdation = (id,data)=>{
+const updatedCourses = (id,data)=>{
     if(!mySet.has(id)){
        return null;
     }
     const index = courses.findIndex(el => el.subjectId === id);
-    // if(data.subjectId != id){
-    //     return null;
-    // }
-    //date and time calculation
     let currentTime = new Date();
     let currentOffset = currentTime.getTimezoneOffset();
     let ISTOffset = 330;
@@ -65,8 +54,6 @@ const modifiedCoursesArrayAfterUpdation = (id,data)=>{
     let day = currentTime.getUTCDay()+3;
     let month = currentTime.getUTCMonth()+1;
     let year = currentTime.getUTCFullYear();
-
-    // const newCourse = Object.assign({subjectId:newSubjectId},data,{"dateCreated":},{"dateModified":});
     const newCourse = {
         subjectId: id,
         subjectName: data.subjectName,
@@ -78,7 +65,7 @@ const modifiedCoursesArrayAfterUpdation = (id,data)=>{
     return courses;
 }
 
-const modifiedCoursesArrayAfterDeletion = (id)=>{
+const updatedCoursesAfterDeletion = (id)=>{
     console.log(mySet);
     if(!mySet.has(id)){
        return null;
@@ -89,4 +76,4 @@ const modifiedCoursesArrayAfterDeletion = (id)=>{
     return courses;
 }
 
-module.exports = {getCourses,getCourseById,modifiedCoursesArray,modifiedCoursesArrayAfterUpdation,modifiedCoursesArrayAfterDeletion,courses};
+module.exports = {getCourses,getCourse,addCourse,updatedCourses,updatedCoursesAfterDeletion,courses};
