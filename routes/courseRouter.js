@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const {getAllCourses,addCourse,getCourse,updateCourse,deleteCourse} = require('./../controllers/courseController');
+const {getAllCourses,addNewCourse,getACourse,updateCourse,deleteCourse} = require('./../controllers/courseController');
 
 router
   .route('/courses')
   .get(getAllCourses)
-  .post(addCourse);
+  .post(addNewCourse);
 
 router
   .route('/courses/:subjectId')
-  .get(getCourse)
+  .get(getACourse)
   .put(updateCourse)
   .delete(deleteCourse);
 

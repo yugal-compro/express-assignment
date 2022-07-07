@@ -1,46 +1,31 @@
-const fs = require('fs');
-const {getCourses,getCourseById,modifiedCoursesArray,modifiedCoursesArrayAfterUpdation,modifiedCoursesArrayAfterDeletion} = require('./../model/course');
-//let courses = JSON.parse(fs.readFileSync(`${__dirname}/../data/courses.json`));
+const {getCourses,getCourse,addCourse,updatedCourses,updatedCoursesAfterDeletion, courses} = require('./../model/course');
 
 const getAllCourses = (req,res)=>{
     const courses = getCourses();
     res.status(200).json(courses);
 };
 
-const getCourse = (req,res)=>{
+const getACourse = (req,res)=>{
     const subjectId = req.params.subjectId * 1;
-    const course = getCourseById(subjectId);
+    const course = getCourse(subjectId);
     (course == null)? res.status(404).json({message : 'Course not found'}) : res.status(200).json(course);
 };
 
-const addCourse = (req,res)=>{
-    const courses = modifiedCoursesArray(req.body);
-    fs.writeFile(`C:/express-assignment/data/courses.json`,JSON.stringify(courses),(err)=>{
-        (err)? res.status(404).json({message : 'Unable to modify'}):res.status(201).json(courses);
-    });
+const addNewCourse = (req,res)=>{
+    const course = addCourse(req.body);
+    (course==null)?res.status(404).json({message:'NO'}):res.status(201).json(course);
 };
 
 const updateCourse = (req,res)=>{
     const subjectId = req.params.subjectId * 1;
-    const courses = modifiedCoursesArrayAfterUpdation(subjectId,req.body);
-    if(courses == null) res.status(404).json({message:'Unable to find the item you want to modify.'});
-    else{
-    fs.writeFile(`C:/express-assignment/data/courses.json`,JSON.stringify(courses),err=>{
-        (err)? res.status(404).json({message : 'Unable to modify'}):res.status(201).json(courses);
-    })};
+    const course = updatedCourses(subjectId,req.body);
+    (course==null)?res.status(404).json({message:'NO'}):res.status(200).json(course);
 };
 
 const deleteCourse = (req,res)=>{
     const subjectId = req.params.subjectId * 1;
-    const courses = modifiedCoursesArrayAfterDeletion(subjectId);
-    if(courses==null){
-      res.status(404).json('The server is unable to find the course in the database.');
-    }else{
-      fs.writeFile(`C:/express-assignment/data/courses.json`,JSON.stringify(courses),err=>{
-        (err)? res.status(404).json({message : 'Unable to modify'}):res.status(201).json(courses);
-      });
-    }  
-    
+    const course = updatedCoursesAfterDeletion(subjectId); 
+    (course==null)?res.status(404).json({message:'NO'}):res.status(200).json(courses);
 };
 
-module.exports = {getAllCourses,getCourse,addCourse,updateCourse,deleteCourse};
+module.exports = {getAllCourses,getACourse,addNewCourse,updateCourse,deleteCourse};
