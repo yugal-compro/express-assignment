@@ -26,7 +26,7 @@ const addCourse = (data)=>{
     }
     courses.push(newCourse);
     updateData(courses);
-    return newCourse;
+    return courses;
 }
 
 const updateCourse = (id,data)=>{
@@ -45,7 +45,7 @@ const updateCourse = (id,data)=>{
     courses.splice(index,1,newCourse);
     
     updateData(courses);
-   return newCourse;
+   return courses;
 }
 
 const deleteCourse = (id)=>{       
