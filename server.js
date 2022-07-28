@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api',courseRouter);
-
+app.use(express.static('public'))
 app.listen(port,()=>{
     console.log(`Server is started on the port ${port}`);
 });
