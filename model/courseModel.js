@@ -45,7 +45,7 @@ const updateCourse = (id,data)=>{
     courses.splice(index,1,newCourse);
     
     updateData(courses);
-   return courses;
+   return newCourse;
 }
 
 const deleteCourse = (id)=>{       
